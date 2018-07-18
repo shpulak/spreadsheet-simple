@@ -1,0 +1,14 @@
+table,
+td {
+  border: 1px solid #333;
+}
+
+thead {
+  background-color: #333;
+  color: #fff;
+}
+
+th,
+td {
+  min-width: 60px;
+}
