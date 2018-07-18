@@ -1,14 +1,113 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title__logo {
+  height: 7rem;
+  margin: 1rem;
+}
+
+.title__name {
+  font-size: 3.6rem;
+  display: inline;
+  margin-left: 2rem;
+}
+
 table,
-td {
-  border: 1px solid #333;
+td,
+th,
+tr {
+  border: 0.05rem solid rgba(197, 197, 197, 0.486);
+  font-size: 1.4rem;
+  height: 2.5rem;
+  border-spacing: 0rem;
 }
 
 thead {
-  background-color: #333;
+  background-color: rgb(160, 180, 206);
   color: #fff;
 }
 
-th,
 td {
-  min-width: 60px;
+  min-width: 10rem;
+}
+
+th > .dropdown {
+  float: right;
+}
+
+tbody th {
+  min-width: 4rem;
+}
+
+thead th:first-child {
+  background-color: none;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #f8f8f8d0;
+  color: rgba(0, 0, 0, 0.5);
+  padding: 0.25rem 0.5rem;
+  /* /* font-size: 1.2rem; */
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover,
+.dropbtn:focus {
+  background-color: #f8f8f8a4;
+  /* visibility: visible; */
+}
+
+.dropbtn img {
+  height: 2rem;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 16rem;
+  box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content p {
+  color: rgb(78, 78, 78);
+  /* padding: 12px 16px; */
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content p:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display: block;
 }

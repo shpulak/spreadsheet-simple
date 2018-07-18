@@ -1,5 +1,5 @@
-let defaultRowCount = 5; // No of rows
-let defaultColCount = 6; // No of cols
+let defaultRowCount = 20; // No of rows
+let defaultColCount = 10; // No of cols
 const SPREADSHEET_DB = "spreadsheet_db";
 
 initializeData = () => {
@@ -41,7 +41,7 @@ createHeaderRow = () => {
       span.innerHTML = `Col ${i}`;
       const dropDownDiv = document.createElement("div");
       dropDownDiv.setAttribute("class", "dropdown");
-      dropDownDiv.innerHTML = `<button class="dropbtn" id="col-dropbtn-${i}">V</button>
+      dropDownDiv.innerHTML = `<button class="dropbtn" id="col-dropbtn-${i}">+</button>
         <div id="col-dropdown-${i}" class="dropdown-content">
           <p class="col-insert-left">Insert 1 column left</p>
           <p class="col-insert-right">Insert 1 column right</p>
@@ -66,7 +66,7 @@ createTableBodyRow = rowNum => {
       const dropDownDiv = document.createElement("div");
       span.innerHTML = rowNum;
       dropDownDiv.setAttribute("class", "dropdown");
-      dropDownDiv.innerHTML = `<button class="dropbtn" id="row-dropbtn-${rowNum}">V</button>
+      dropDownDiv.innerHTML = `<button class="dropbtn" id="row-dropbtn-${rowNum}">+</button>
         <div id="row-dropdown-${rowNum}" class="dropdown-content">
           <p class="row-insert-top">Insert 1 row above</p>
           <p class="row-insert-bottom">Insert 1 row below</p>
