@@ -3,8 +3,7 @@ let defaultColCount = 10; // No of cols
 const SPREADSHEET_DB = "spreadsheet_db";
 
 initializeData = () => {
-  console.log("initializeData");
-
+  // console.log("initializeData");
   const data = [];
   for (let i = 0; i <= defaultRowCount; i++) {
     const child = [];
@@ -92,6 +91,7 @@ createTableBody = tableBody => {
   }
 };
 
+// Fill Data in created table from localstorage
 populateTable = () => {
   const data = this.getData();
   if (data === undefined || data === null) return;
@@ -104,8 +104,8 @@ populateTable = () => {
   }
 };
 
+// Utility function to add row
 addRow = (currentRow, direction) => {
-  // Change data in storage from current Row;
   let data = this.getData();
   const colCount = data[0].length;
   const newRow = new Array(colCount).fill("");
@@ -119,6 +119,7 @@ addRow = (currentRow, direction) => {
   this.createSpreadsheet();
 };
 
+// Utility function to delete row
 deleteRow = currentRow => {
   let data = this.getData();
   data.splice(currentRow, 1);
@@ -127,6 +128,7 @@ deleteRow = currentRow => {
   this.createSpreadsheet();
 };
 
+// Utility function to add columns
 addColumn = (currentCol, direction) => {
   let data = this.getData();
   for (let i = 0; i <= defaultRowCount; i++) {
@@ -141,6 +143,7 @@ addColumn = (currentCol, direction) => {
   this.createSpreadsheet();
 };
 
+// Utility function to delete column
 deleteColumn = currentCol => {
   let data = this.getData();
   for (let i = 0; i <= defaultRowCount; i++) {
@@ -151,11 +154,14 @@ deleteColumn = currentCol => {
   this.createSpreadsheet();
 };
 
+// Map for storing the sorting history of every column;
 const sortingHistory = new Map();
+
+// Utility function to sort columns
 sortColumn = currentCol => {
   let spreadSheetData = this.getData();
-  //   console.log("csort", currentCol, data);
   let data = spreadSheetData.slice(1);
+  if (!data.some(a => a[currentCol] !== "")) return;
   if (sortingHistory.has(currentCol)) {
     const sortOrder = sortingHistory.get(currentCol);
     switch (sortOrder) {
@@ -177,12 +183,14 @@ sortColumn = currentCol => {
   this.createSpreadsheet();
 };
 
-// Compare Functions
+// Compare Functions for sorting - ascending
 const ascSort = (currentCol, a, b) => {
   let _a = a[currentCol];
   let _b = b[currentCol];
   if (_a === "") return 1;
   if (_b === "") return -1;
+
+  // Check for strings and numbers
   if (isNaN(_a) || isNaN(_b)) {
     _a = _a.toUpperCase();
     _b = _b.toUpperCase();
@@ -193,11 +201,14 @@ const ascSort = (currentCol, a, b) => {
   return _a - _b;
 };
 
+// Descending compare function
 const dscSort = (currentCol, a, b) => {
   let _a = a[currentCol];
   let _b = b[currentCol];
   if (_a === "") return 1;
   if (_b === "") return -1;
+
+  // Check for strings and numbers
   if (isNaN(_a) || isNaN(_b)) {
     _a = _a.toUpperCase();
     _b = _b.toUpperCase();
@@ -229,7 +240,7 @@ createSpreadsheet = () => {
 
   populateTable();
 
-  // attach event listener to whole container
+  // attach focusout event listener to whole table body container
   tableBody.addEventListener("focusout", function(e) {
     if (e.target && e.target.nodeName === "TD") {
       let item = e.target;
@@ -240,6 +251,7 @@ createSpreadsheet = () => {
     }
   });
 
+  // Attach click event listener to table body
   tableBody.addEventListener("click", function(e) {
     if (e.target) {
       if (e.target.className === "dropbtn") {
@@ -263,12 +275,10 @@ createSpreadsheet = () => {
     }
   });
 
+  // Attach click event listener to table headers
   tableHeaders.addEventListener("click", function(e) {
     if (e.target) {
-      if (
-        e.target.className === "column-header" ||
-        e.target.className === "column-header-span"
-      ) {
+      if (e.target.className === "column-header-span") {
         sortColumn(parseInt(e.target.parentNode.id.split("-")[1]));
       }
       if (e.target.className === "dropbtn") {
