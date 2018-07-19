@@ -1,5 +1,5 @@
-let defaultRowCount = 5; // No of rows
-let defaultColCount = 6; // No of cols
+let defaultRowCount = 20; // No of rows
+let defaultColCount = 10; // No of cols
 const SPREADSHEET_DB = "spreadsheet_db";
 
 initializeData = () => {
