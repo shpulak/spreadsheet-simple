@@ -160,21 +160,52 @@ sortColumn = currentCol => {
     const sortOrder = sortingHistory.get(currentCol);
     switch (sortOrder) {
       case "desc":
-        data.sort((a, b) => a[currentCol] - b[currentCol]);
+        data.sort(ascSort.bind(this, currentCol));
         sortingHistory.set(currentCol, "asc");
         break;
       case "asc":
-        data.sort((a, b) => b[currentCol] - a[currentCol]);
+        data.sort(dscSort.bind(this, currentCol));
         sortingHistory.set(currentCol, "desc");
         break;
     }
   } else {
+    data.sort(ascSort.bind(this, currentCol));
     sortingHistory.set(currentCol, "asc");
-    data.sort((a, b) => a[currentCol] - b[currentCol]);
   }
   data.splice(0, 0, new Array(data[0].length).fill(""));
   saveData(data);
   this.createSpreadsheet();
+};
+
+// Compare Functions
+const ascSort = (currentCol, a, b) => {
+  let _a = a[currentCol];
+  let _b = b[currentCol];
+  if (_a === "") return 1;
+  if (_b === "") return -1;
+  if (isNaN(_a) || isNaN(_b)) {
+    _a = _a.toUpperCase();
+    _b = _b.toUpperCase();
+    if (_a < _b) return -1;
+    if (_a > _b) return 1;
+    return 0;
+  }
+  return _a - _b;
+};
+
+const dscSort = (currentCol, a, b) => {
+  let _a = a[currentCol];
+  let _b = b[currentCol];
+  if (_a === "") return 1;
+  if (_b === "") return -1;
+  if (isNaN(_a) || isNaN(_b)) {
+    _a = _a.toUpperCase();
+    _b = _b.toUpperCase();
+    if (_a < _b) return 1;
+    if (_a > _b) return -1;
+    return 0;
+  }
+  return _b - _a;
 };
 
 createSpreadsheet = () => {
