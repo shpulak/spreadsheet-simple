@@ -1,5 +1,5 @@
-let defaultRowCount = 20; // No of rows
-let defaultColCount = 10; // No of cols
+let defaultRowCount = 15; // No of rows
+let defaultColCount = 12; // No of cols
 const SPREADSHEET_DB = "spreadsheet_db";
 
 initializeData = () => {
@@ -27,12 +27,17 @@ saveData = data => {
   localStorage.setItem(SPREADSHEET_DB, JSON.stringify(data));
 };
 
+resetData = data => {
+  localStorage.removeItem(SPREADSHEET_DB);
+  this.createSpreadsheet();
+};
+
 createHeaderRow = () => {
   const tr = document.createElement("tr");
-  tr.setAttribute("id", 0);
+  tr.setAttribute("id", "h-0");
   for (let i = 0; i <= defaultColCount; i++) {
     const th = document.createElement("th");
-    th.setAttribute("id", `0-${i}`);
+    th.setAttribute("id", `h-0-${i}`);
     th.setAttribute("class", `${i === 0 ? "" : "column-header"}`);
     // th.innerHTML = i === 0 ? `` : `Col ${i}`;
     if (i !== 0) {
@@ -57,7 +62,7 @@ createHeaderRow = () => {
 
 createTableBodyRow = rowNum => {
   const tr = document.createElement("tr");
-  tr.setAttribute("id", rowNum);
+  tr.setAttribute("id", `r-${rowNum}`);
   for (let i = 0; i <= defaultColCount; i++) {
     const cell = document.createElement(`${i === 0 ? "th" : "td"}`);
     if (i === 0) {
@@ -78,7 +83,7 @@ createTableBodyRow = rowNum => {
     } else {
       cell.contentEditable = true;
     }
-    cell.setAttribute("id", `${rowNum}-${i}`);
+    cell.setAttribute("id", `r-${rowNum}-${i}`);
     // cell.id = `${rowNum}-${i}`;
     tr.appendChild(cell);
   }
@@ -98,7 +103,7 @@ populateTable = () => {
 
   for (let i = 1; i < data.length; i++) {
     for (let j = 1; j < data[i].length; j++) {
-      const cell = document.getElementById(`${i}-${j}`);
+      const cell = document.getElementById(`r-${i}-${j}`);
       cell.innerHTML = data[i][j];
     }
   }
@@ -246,7 +251,7 @@ createSpreadsheet = () => {
       let item = e.target;
       const indices = item.id.split("-");
       let spreadsheetData = getData();
-      spreadsheetData[indices[0]][indices[1]] = item.innerHTML;
+      spreadsheetData[indices[1]][indices[2]] = item.innerHTML;
       saveData(spreadsheetData);
     }
   });
@@ -279,7 +284,7 @@ createSpreadsheet = () => {
   tableHeaders.addEventListener("click", function(e) {
     if (e.target) {
       if (e.target.className === "column-header-span") {
-        sortColumn(parseInt(e.target.parentNode.id.split("-")[1]));
+        sortColumn(parseInt(e.target.parentNode.id.split("-")[2]));
       }
       if (e.target.className === "dropbtn") {
         const idArr = e.target.id.split("-");
@@ -318,3 +323,11 @@ window.onclick = function(event) {
     }
   }
 };
+
+document.getElementById("reset").addEventListener("click", e => {
+  if (
+    confirm("This will erase all data and set default configs. Are you sure?")
+  ) {
+    this.resetData();
+  }
+});

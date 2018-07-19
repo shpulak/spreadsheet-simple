@@ -13,6 +13,7 @@ html {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 1rem;
 }
 
 .title__logo {
@@ -20,10 +21,23 @@ html {
   margin: 1rem;
 }
 
-.title__name {
+.title__text {
+  margin-left: 2rem;
+}
+
+.title__text--name {
   font-size: 3.6rem;
   display: inline;
-  margin-left: 2rem;
+  font-weight: 600;
+}
+
+.title__text--description {
+  font-size: 1.6rem;
+  font-weight: 200;
+}
+
+.spreadsheet {
+  margin: 1rem 0.5rem;
 }
 
 table,
@@ -36,41 +50,48 @@ tr {
   border-spacing: 0rem;
 }
 
+th {
+  font-weight: 500;
+}
+
 thead {
-  background-color: rgb(160, 180, 206);
-  color: #fff;
+  /* background-color: rgb(160, 180, 206); */
+  background-color: #f1f1f1;
+  /* color: #fff; */
 }
 
 td {
   min-width: 10rem;
+  padding: 0.2rem 0.5rem;
 }
 
+th {
+  padding: 0.2rem 0.4rem;
+}
 th > .dropdown {
   float: right;
 }
 
 tbody th {
-  min-width: 4rem;
-}
-
-thead th:first-child {
-  background-color: none;
+  min-width: 5rem;
+  background: #fafafa;
 }
 
 /* Dropdown Button */
 .dropbtn {
-  background-color: #f8f8f8d0;
+  background-color: #e2e2e2d0;
   color: rgba(0, 0, 0, 0.5);
-  padding: 0.25rem 0.5rem;
+  padding: 0rem 0.3rem;
   /* /* font-size: 1.2rem; */
   border: none;
   cursor: pointer;
+  transition: ease 0.4s;
 }
 
 /* Dropdown button on hover & focus */
 .dropbtn:hover,
 .dropbtn:focus {
-  background-color: #f8f8f8a4;
+  background-color: #d0d0d0;
   /* visibility: visible; */
 }
 
@@ -115,4 +136,26 @@ thead th:first-child {
 
 .column-header-span {
   cursor: pointer;
+}
+
+.spreadsheet-controls {
+  margin-left: 0.5rem;
+}
+
+.reset-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: #d9534f;
+  color: #fff;
+  border-color: #d43f3a;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: ease 0.3s;
+}
+
+.reset-btn:hover {
+  color: #fff;
+  background-color: #c9302c;
+  border-color: #ac2925;
 }
