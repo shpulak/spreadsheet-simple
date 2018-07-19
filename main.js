@@ -1,5 +1,5 @@
-let defaultRowCount = 20; // No of rows
-let defaultColCount = 10; // No of cols
+let defaultRowCount = 5; // No of rows
+let defaultColCount = 6; // No of cols
 const SPREADSHEET_DB = "spreadsheet_db";
 
 initializeData = () => {
@@ -39,6 +39,7 @@ createHeaderRow = () => {
     if (i !== 0) {
       const span = document.createElement("span");
       span.innerHTML = `Col ${i}`;
+      span.setAttribute("class", "column-header-span");
       const dropDownDiv = document.createElement("div");
       dropDownDiv.setAttribute("class", "dropdown");
       dropDownDiv.innerHTML = `<button class="dropbtn" id="col-dropbtn-${i}">+</button>
@@ -152,23 +153,26 @@ deleteColumn = currentCol => {
 
 const sortingHistory = new Map();
 sortColumn = currentCol => {
-  let data = this.getData();
+  let spreadSheetData = this.getData();
+  //   console.log("csort", currentCol, data);
+  let data = spreadSheetData.slice(1);
   if (sortingHistory.has(currentCol)) {
     const sortOrder = sortingHistory.get(currentCol);
     switch (sortOrder) {
-      case "asc":
-        data.sort((a, b) => a[currentCol] - b[currentCol]);
-        sortingHistory.set(currentCol, "desc");
-        break;
       case "desc":
-        data.sort((a, b) => b[currentCol] - a[currentCol]);
+        data.sort((a, b) => a[currentCol] - b[currentCol]);
         sortingHistory.set(currentCol, "asc");
+        break;
+      case "asc":
+        data.sort((a, b) => b[currentCol] - a[currentCol]);
+        sortingHistory.set(currentCol, "desc");
         break;
     }
   } else {
     sortingHistory.set(currentCol, "asc");
     data.sort((a, b) => a[currentCol] - b[currentCol]);
   }
+  data.splice(0, 0, new Array(data[0].length).fill(""));
   saveData(data);
   this.createSpreadsheet();
 };
@@ -230,8 +234,11 @@ createSpreadsheet = () => {
 
   tableHeaders.addEventListener("click", function(e) {
     if (e.target) {
-      if (e.target.className === "column-header") {
-        sortColumn(parseInt(e.target.id.split("-")[1]));
+      if (
+        e.target.className === "column-header" ||
+        e.target.className === "column-header-span"
+      ) {
+        sortColumn(parseInt(e.target.parentNode.id.split("-")[1]));
       }
       if (e.target.className === "dropbtn") {
         const idArr = e.target.id.split("-");

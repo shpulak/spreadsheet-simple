@@ -111,3 +111,7 @@ thead th:first-child {
 .show {
   display: block;
 }
+
+.column-header-span {
+  cursor: pointer;
+}
